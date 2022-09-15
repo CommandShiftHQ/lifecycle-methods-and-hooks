@@ -1,19 +1,9 @@
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/app.css";
 import Child from "./Child";
 
-const ThemeContext = createContext();
-export const useThemeContext = () => useContext(ThemeContext);
-
-const ThemeContextProvider = ({ children }) => {
-  const [useDarkTheme, setUseDarkTheme] = useState(true);
-  return (
-    <ThemeContext.Provider value={{ useDarkTheme, setUseDarkTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-};
+import { ThemeContextProvider } from "../contexts/ThemeContext";
 
 const App = () => {
   const [count, setCount] = useState(0);

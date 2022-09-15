@@ -1,5 +1,5 @@
 import "../styles/grandchild.css";
-import { useThemeContext } from "./App";
+import { useThemeContext } from "../contexts/ThemeContext";
 
 const Grandchild = () => {
   const { useDarkTheme, setUseDarkTheme } = useThemeContext();
