@@ -1,6 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext, useContext } from "react";
 import axios from "axios";
 import "../styles/app.css";
+import Child from "./Child";
+
+const ThemeContext = createContext();
+export const useThemeContext = () => useContext(ThemeContext);
+
+const ThemeContextProvider = ({ children }) => {
+  const [useDarkTheme, setUseDarkTheme] = useState(true);
+  return (
+    <ThemeContext.Provider value={{ useDarkTheme, setUseDarkTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -16,26 +29,32 @@ const App = () => {
     };
   }, []);
 
-  useEffect(() =>{
+  useEffect(() => {
     console.log("Count updated");
-  }, [count])
+  }, [count]);
 
   const handleClick = () => {
     setCount((prev) => prev + 1);
   };
   return (
-    <div className="app">
-      <div className="app__container">Lets look at some hooks!</div>
-      <div className="app__container">
-        <div className="app__container-title">useState</div>
-        <div>Current count: {count}</div>
-        <button onClick={handleClick}>+</button>
+    <ThemeContextProvider>
+      <div className="app">
+        <div className="app__container">Lets look at some hooks!</div>
+        <div className="app__container">
+          <div className="app__container-title">useState</div>
+          <div>Current count: {count}</div>
+          <button onClick={handleClick}>+</button>
+        </div>
+        <div className="app__container">
+          <div className="app__container-title">useEffect</div>
+          <div>Fetched word: {word}</div>
+        </div>
+        <div className="app__container">
+          <div className="app__container-title">useContext</div>
+          <Child />
+        </div>
       </div>
-      <div className="app__container">
-        <div className="app__container-title">useEffect</div>
-        <div>Fetched word: {word}</div>
-      </div>
-    </div>
+    </ThemeContextProvider>
   );
 };
 
